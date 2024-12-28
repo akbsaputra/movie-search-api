@@ -1,0 +1,54 @@
+<!doctype html>
+<!-- This is the "search.html" -->
+<title>{% block title %}Movie Search{% endblock %}</title>
+<html>
+<head>
+    <link rel="stylesheet" href="static/search.css">
+    <script>
+        function validateForm() {
+            // This Javascript function makes sure that the title field is filled
+            // before submitting the form, otherwise it will warn user with a
+            // dialog box
+            var titleInput = document.getElementById("title");
+            var titleValue = titleInput.value.trim(); // Remove leading/trailing whitespace
+        
+            if (titleValue === "") {
+                alert("Title cannot be empty.");
+                titleInput.focus(); // Put the focus back on the title input
+                return false; // Prevent form submission
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1 style="color:darkblue">Movie Search</h1>
+            <h3>Search and find details about movies</h3>
+            <p>powered by TheMovieDB.org and Open Movie Database free API</p>
+        </div>
+        <div class="form-container">
+            <form method="post" onsubmit="return validateForm()">
+                <label for="title">Title<span style="color: red;">*</span>:</label>
+                <input id="title" name="title">
+                &nbsp;&nbsp;
+                <button type="submit">Search</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;or
+                &nbsp;&nbsp;&nbsp;&nbsp;
+
+                <!-- I put a link to "/trending" page by calling the "trending" function
+                using flask built-in function, url_for -->
+                <a href="{{ url_for('trending') }}">
+                    Find trending movies this week
+                </a>
+            </form>
+        </div>
+        <div class="response-container">
+            <!-- This block represents the place where the search result will be
+            displayed -->
+            {% block response %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="../static/movie.css">
+</head>
+<!-- Change the title of the page based on the movie title -->
+<title>{{ details["Title"] }}</title>
+
+{% if (movie and details) %}
+    <!-- If the request returns "movie" and "details", display the movie details -->
+    <!-- First, the images (poster and backdrop)-->
+    {% if movie["backdrop_path"] %}
+    <body style="background-image: url({{ 'https://image.tmdb.org/t/p/w1920_and_h800_multi_faces' + movie['backdrop_path']}}); background-size: cover">
+    {% else %}
+    <body style="background-color: lightgrey;">
+    {% endif %}
+    <div class="container">
+        <!-- Next, show the movie details -->
+        <!-- As you can see, I use movie[] and details[] interchangably to make
+        sure that the things shown in the result page is similar to the ones
+        shown in the details page. movie[] is from TMDB, details[] is from OMDB -->
+        <table>
+            <tr>
+                <td>
+                    {% if movie["poster_path"] %}
+                        <img src={{ "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + movie["poster_path"]}} style="width:300px;height:auto;">
+                    {% else %}
+                        <img src="static/no_image.png" style="width:300px;height:auto;">
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="result-title">{{ movie["title"] }}</span><br>
+                    <i>Year Released: </i>{{ movie["release_date"][:4] }}<br>
+                    <i>Rating: </i>{{ details["Rated"] }}<br>
+                    <i>Runtime: </i>{{ details["Runtime"] }}<br>
+                    <i>Genre: </i>{{ details["Genre"] }}<br>
+                    <i>Director: </i>{{ details["Director"] }}<br>
+                    <i>Writer: </i>{{ details["Writer"] }}<br>
+                    <i>Cast: </i>{{ details["Actors"] }}<br>
+                    <i>Country: </i>{{ details["Country"] }}<br>
+                    <i>Synopsis: </i>{{ movie["overview"] }}
+                </td>
+            </tr>
+        </table>
+{% else %}
+<!-- If the request doesn't return "movie" and "details", show that movie is not
+found-->
+        <p>Movie id not found</p>
+{% endif %}
+        <br><br>
+
+        <!-- I also use url_for to refer back to homepage by calling the 
+        home() function -->
+        <a href="{{ url_for('home') }}" style="text-align: center;">
+            << Back to Homepage
+        </a>
+    </div>
+    </body>
+</html>

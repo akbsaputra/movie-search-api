@@ -1,0 +1,41 @@
+<!-- This html file extends the homepage (search.html), so it becomes one part
+of search.html instead of a singular html file -->
+{% extends 'search.html' %}
+{% block title %}Search Results{% endblock %}
+
+{% block response %}
+    <!-- If the search request returns "movies", then show search results -->
+    {% if movies %}
+        <div class="result-header">Showing search results (max 20 movies):</div><br>
+        <table>
+        <!-- Loop to create a row for each search result -->
+        {% for movie in movies %}
+            <tr>
+                <td>
+                    {% if movie["poster_path"] %}
+                        <img src={{ "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + movie["poster_path"]}} style="width:150px;height:auto;">
+                    {% else %}
+                        <img src="static/no_image.png" style="width:150px;height:auto;">
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="result-title">{{ movie["title"] }}</span><br>
+                    <i>Year Released: </i>{{ movie["release_date"][:4] }}<br>
+                    <i>Summary: </i>{{ movie["overview"] }}<br><br>
+
+                    <!-- I put url_for again here by calling movie_detail()
+                    function and passing the "movie['id']" as the function
+                    argument ("id"), so when user clicks on "Open details >>"
+                    the movie_detail() function will be called -->
+                    <a href="{{ url_for('movie_detail', id=movie['id']) }}">
+                        Open details >>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+    <!-- If the request doesn't return "movies", show that no result is found -->
+        <div class="result-header">No result found</div>
+    {% endif %}
+{% endblock %}

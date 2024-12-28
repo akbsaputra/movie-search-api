@@ -1,0 +1,31 @@
+html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    width: 800px;
+    margin: auto;
+    padding: 20px;
+    height: 100vh;
+}
+
+.container {
+    align-items: center;
+    top: 200px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    box-shadow: 0 0 100px 1px black;
+    text-align: center;
+}
+
+.result-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+td {
+    padding: 10px;
+    vertical-align: top;
+    text-align: left;
+}
